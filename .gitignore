@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+.vercel
+*.tsbuildinfo
+.cursor/
+
+# Local Word Desktop fixtures with real author names — keep out of public repo
+packages/core/__tests__/fixtures/word-desktop/test_comment_track.docx
