@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter @firm-author/web dev",
-    "build": "pnpm --filter @firm-author/core build && pnpm --filter @firm-author/web build",
+    "build": "pnpm --filter @firm-author/core build && pnpm --filter @firm-author/word-addin build && pnpm --filter @firm-author/web build",
     "test": "pnpm --filter @firm-author/core exec vitest run",
     "test:watch": "pnpm --filter @firm-author/core exec vitest"
   }

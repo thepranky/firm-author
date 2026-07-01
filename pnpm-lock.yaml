@@ -24,6 +24,21 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.20.0)
 
+  packages/ui:
+    devDependencies:
+      '@firm-author/core':
+        specifier: workspace:*
+        version: link:../core
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/web:
     dependencies:
       '@firm-author/core':
@@ -36,6 +51,40 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.31
+      '@types/react-dom':
+        specifier: ^18.3.1
+        version: 18.3.7(@types/react@18.3.31)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.7.0(vite@5.4.21(@types/node@22.20.0))
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.11
+        version: 5.4.21(@types/node@22.20.0)
+
+  packages/word-addin:
+    dependencies:
+      '@firm-author/core':
+        specifier: workspace:*
+        version: link:../core
+      '@firm-author/ui':
+        specifier: workspace:*
+        version: link:../ui
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/office-js':
+        specifier: ^1.0.421
+        version: 1.0.595
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.31
@@ -449,6 +498,9 @@ packages:
 
   '@types/node@22.20.0':
     resolution: {integrity: sha512-QWlFW2wf3nTjC13/DqRnBpR4ZO36VJH/JVBkA/vcnmbTBNQIlnObqyqZE1tUR7+Ni23Lda8R1BxMfbXRpCUx5g==}
+
+  '@types/office-js@1.0.595':
+    resolution: {integrity: sha512-9ahPmLfaNkA5G/wVOD5u+UIkHhI/M5jKIPmuz9i4Xf5C6WyXx6okDgdNHzJcD4WYErBGRlbWoiqZUphzMQsylQ==}
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
@@ -1110,6 +1162,8 @@ snapshots:
   '@types/node@22.20.0':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/office-js@1.0.595': {}
 
   '@types/prop-types@15.7.15': {}
 

@@ -11,8 +11,7 @@ import {
   type AuditReport,
 } from "@firm-author/core";
 import { StepNav, IntegrityChecks } from "./components/StepNav";
-import { useStepSpy } from "./hooks/useStepSpy";
-import { scrollToStep, type StepId } from "./steps";
+import { type StepId } from "./steps";
 
 const PRESET_KEY = "firm-author-preset";
 
@@ -94,7 +93,23 @@ export default function App() {
   }, [scan, result]);
 
   const progressStep = activeStep(scan, result);
-  const visibleStep = useStepSpy(progressStep, [scan, result]);
+  const [viewStep, setViewStep] = useState<StepId>("upload");
+
+  useEffect(() => {
+    setViewStep(progressStep);
+  }, [progressStep]);
+
+  const goToStep = useCallback((id: StepId) => {
+    setViewStep(id);
+    if (window.matchMedia("(max-width: 899px)").matches) {
+      requestAnimationFrame(() => {
+        document.getElementById(`step-${id}`)?.scrollIntoView({
+          behavior: "smooth",
+          block: id === "upload" ? "start" : "center",
+        });
+      });
+    }
+  }, []);
 
   const allAuthorsSelected = useMemo(() => {
     if (!scan || scan.authors.length === 0) return false;
@@ -130,7 +145,7 @@ export default function App() {
       setFileBytes(bytes);
       setScan(scanResult);
       setSelected(new Set());
-      scrollToStep("configure");
+      goToStep("configure");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to read document.");
       setFile(null);
@@ -183,7 +198,7 @@ export default function App() {
     setError(null);
     if (selected.size === 0) {
       setError("Select at least one author to replace.");
-      scrollToStep("configure");
+      goToStep("configure");
       return;
     }
     const timestampPolicy = buildTimestampPolicy();
@@ -202,7 +217,7 @@ export default function App() {
       const report = generateAuditReport(anonResult);
       setResult(anonResult);
       setAudit(report);
-      scrollToStep("results");
+      goToStep("results");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Anonymisation failed.");
     } finally {
@@ -239,14 +254,15 @@ export default function App() {
       <div className="content-layout">
         <aside className="step-rail">
           <StepNav
-            visible={visibleStep}
+            visible={viewStep}
             progress={progressStep}
             unlocked={unlocked}
+            onNavigate={goToStep}
           />
         </aside>
 
         <div className="content-body">
-          <main className="main">
+          <main className={`main main--${viewStep}`}>
         <div className="hero">
           <h2 className="hero__title">
             Anonymise document authors before sharing externally.
@@ -517,17 +533,9 @@ export default function App() {
                 </div>
               )}
 
-              <div className="btn-row">
+              <div className="btn-row btn-row--center">
                 <button type="button" className="btn btn--primary" onClick={downloadDocx}>
                   Download .docx
-                </button>
-                <button
-                  type="button"
-                  className="btn btn--ghost"
-                  disabled
-                  title="Coming soon"
-                >
-                  Download redline
                 </button>
               </div>
             </div>

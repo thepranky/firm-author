@@ -35,3 +35,16 @@ Add more real Word-created documents to `word-desktop/` as you find edge cases.
 ## Sign-off
 
 Before internal pilot deploy, complete this checklist on **`test_comment_track.docx`** and note the date + tester in your team channel. See [DEPLOY.md](./DEPLOY.md) for Vercel steps.
+
+## Word add-in (Desktop)
+
+Sideload manifest from `https://firm-author.vercel.app/addin/manifest.xml` after deploy.
+
+1. `pnpm build` (builds add-in into `packages/web/dist/addin/`)
+2. Word → **Insert → Add-ins → My Add-ins → Upload My Add-in** → select `manifest.xml`
+3. Open a `.docx` with multiple authors and open the Firm Author task pane
+
+- [ ] Task pane loads and scans the open document
+- [ ] Anonymise selected authors → download anonymised `.docx` + audit
+- [ ] Open downloaded file in Word — Review pane shows replacement author
+- [ ] Open document in Word is **not** replaced (download-only)

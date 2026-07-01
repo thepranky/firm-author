@@ -32,9 +32,13 @@ pnpm build        # production build
 - Rewrite or collapse `word/people.xml`
 - Rewrite modern comment extension parts (`commentsExtended.xml`, etc.)
 - Automatic internal/external author inference
-- Word add-in packaging
+- Word Online add-in support
 
 Ancillary metadata is **detected and reported** in the audit but not modified.
+
+## Word add-in
+
+Desktop Word task pane add-in — scan and anonymise the open document without uploading to a server. Build output is served at `/addin/` on the deployed site. See [QA.md](./QA.md) for sideload steps.
 
 ## Word Desktop acceptance test
 
@@ -47,8 +51,10 @@ After anonymisation:
 ## Project structure
 
 ```
-packages/core   — @firm-author/core library (scanAuthors, anonymiseAuthors, generateAuditReport)
-packages/web    — Vite + React browser UI
+packages/core       — @firm-author/core library
+packages/ui         — shared React UI (Word add-in)
+packages/web        — Vite + React browser UI
+packages/word-addin — Office task pane add-in (builds into web/public/addin)
 ```
 
 ## Privacy
@@ -79,5 +85,4 @@ See [DEPLOY.md](./DEPLOY.md) for Vercel setup and connecting GitHub for auto-dep
 
 - Optional core.xml / people.xml scrub (checkbox)
 - Modern comment extension metadata rewrite (after Word fixture validation)
-- Word add-in (Office.js)
-- Optional redline / metadata diff export
+- AppSource listing for Word add-in

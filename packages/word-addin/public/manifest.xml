@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+  <Id>f3a2c8e1-9b4d-4a6f-8c2e-1d5f7a9b3c4e</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Firm Author</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Firm Author" />
+  <Description DefaultValue="Anonymise tracked-change and comment authors in the open Word document." />
+  <IconUrl DefaultValue="https://firm-author.vercel.app/addin/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://firm-author.vercel.app/addin/icon-64.png" />
+  <SupportUrl DefaultValue="https://github.com/thepranky/firm-author" />
+  <AppDomains>
+    <AppDomain>https://firm-author.vercel.app</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Document" />
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://firm-author.vercel.app/addin/index.html" />
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title" />
+            <Description resid="GetStarted.Description" />
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl" />
+          </GetStarted>
+          <FunctionFile resid="Commands.Url" />
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="FirmAuthorGroup" label="Firm Author">
+                <Label resid="GroupLabel" />
+                <Control xsi:type="Button" id="FirmAuthorTaskpane">
+                  <Label resid="TaskpaneButton.Label" />
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label" />
+                    <Description resid="TaskpaneButton.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16" />
+                    <bt:Image size="32" resid="Icon.32" />
+                    <bt:Image size="80" resid="Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>FirmAuthorPane</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://firm-author.vercel.app/addin/icon-16.png" />
+        <bt:Image id="Icon.32" DefaultValue="https://firm-author.vercel.app/addin/icon-32.png" />
+        <bt:Image id="Icon.80" DefaultValue="https://firm-author.vercel.app/addin/icon-64.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://firm-author.vercel.app/addin/index.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="https://firm-author.vercel.app/addin/index.html" />
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://github.com/thepranky/firm-author" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Firm Author" />
+        <bt:String id="GroupLabel" DefaultValue="Firm Author" />
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Anonymise authors" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Replace internal tracked-change and comment authors before sharing externally." />
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Open Firm Author to anonymise document authors." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

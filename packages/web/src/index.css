@@ -311,7 +311,7 @@ body {
 .panel__divider {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 1.75rem 0;
+  margin: 1.25rem 0;
 }
 
 /* ——— Upload ——— */
@@ -366,6 +366,7 @@ body {
   padding: 0.65rem 0.75rem;
   text-align: left;
   border-bottom: 1px solid var(--border);
+  vertical-align: middle;
 }
 
 .data-table th {
@@ -383,17 +384,15 @@ body {
   padding-left: 0.5rem;
 }
 
-.data-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
 .data-table tbody tr:hover td {
   background: #fafaf9;
 }
 
 .data-table input[type="checkbox"] {
+  display: block;
   width: 1rem;
   height: 1rem;
+  margin: 0;
   accent-color: var(--accent);
   cursor: pointer;
 }
@@ -476,6 +475,11 @@ body {
   margin-top: 0.5rem;
 }
 
+.btn-row--center {
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -556,7 +560,7 @@ body {
   padding: 1rem 1.1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface-muted);
+  background: var(--surface);
 }
 
 .integrity-checks__lead {
@@ -588,7 +592,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 4px;
   font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
@@ -702,13 +706,52 @@ body {
     grid-template-columns: var(--rail-w) minmax(0, 1fr);
     gap: 2.5rem;
     align-items: start;
+    min-height: calc(100dvh - var(--header-h));
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - var(--header-h));
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0 2rem;
+  }
+
+  .main--upload {
+    justify-content: flex-start;
+  }
+
+  .main--configure,
+  .main--results {
+    justify-content: center;
+  }
+
+  .main:not(.main--upload) .hero {
+    display: none;
+  }
+
+  .main--upload #step-configure,
+  .main--upload #step-results {
+    display: none;
+  }
+
+  .main--configure #step-upload,
+  .main--configure #step-results {
+    display: none;
+  }
+
+  .main--results #step-upload,
+  .main--results #step-configure {
+    display: none;
   }
 
   .section:not(#step-upload) {
-    min-height: calc(100dvh - var(--header-h) - 3rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    margin-bottom: 0;
   }
 
   .step-rail {

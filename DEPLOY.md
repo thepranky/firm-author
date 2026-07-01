@@ -28,6 +28,7 @@ npx vercel deploy --prod --yes
 - [ ] Anonymise selected authors
 - [ ] Download cleaned `.docx` and audit files
 - [ ] Open cleaned document in Word Desktop — Review pane shows replacement author
+- [ ] Add-in manifest loads: `https://<your-domain>/addin/manifest.xml`
 
 ## Optional: custom domain
 

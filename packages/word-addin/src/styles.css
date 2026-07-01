@@ -1,0 +1,26 @@
+@import "../../web/src/index.css";
+
+.addin-shell {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.addin-header {
+  padding: 1rem 1rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.addin-header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: var(--font-serif);
+}
+
+.addin-main {
+  padding: 1rem;
+}
+
+.addin-main .panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
