@@ -239,6 +239,7 @@ export default function App() {
           <section className="panel">
             <h4 className="section-heading">Authors to replace</h4>
             <AuthorTable
+              variant="addin"
               scan={scan}
               selected={selected}
               allAuthorsSelected={allAuthorsSelected}

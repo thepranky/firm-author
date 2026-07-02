@@ -26,6 +26,8 @@
 
 .addin-main {
   padding: 1rem;
+  container-type: inline-size;
+  container-name: addin-main;
 }
 
 .addin-main .panel {
@@ -44,4 +46,44 @@
 
 .btn__icon {
   flex-shrink: 0;
+}
+
+/* ——— Add-in author table (diverged from web) ——— */
+
+.addin-main .data-table--authors-addin {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.addin-main .data-table--authors-addin th,
+.addin-main .data-table--authors-addin td {
+  padding: 0.5rem 0.35rem;
+}
+
+.addin-main .data-table--authors-addin .data-table__col-initials {
+  width: 2.25rem;
+}
+
+.addin-main .data-table--authors-addin .data-table__col-count {
+  display: none;
+  width: 1.65rem;
+  padding-left: 0.15rem !important;
+  padding-right: 0.15rem !important;
+}
+
+.addin-main .data-table--authors-addin th.data-table__col-count {
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.addin-main .data-table--authors-addin .data-table__hdr-icon {
+  display: block;
+  margin: 0 auto;
+  color: var(--text-subtle);
+}
+
+@container addin-main (min-width: 360px) {
+  .data-table--authors-addin .data-table__col-count {
+    display: table-cell;
+  }
 }

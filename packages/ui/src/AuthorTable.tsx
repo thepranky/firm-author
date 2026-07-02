@@ -1,6 +1,48 @@
 import type { ScanResult } from "@firm-author/core";
 
+function CommentIcon() {
+  return (
+    <svg
+      className="data-table__hdr-icon"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
+function TrackIcon() {
+  return (
+    <svg
+      className="data-table__hdr-icon"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+    </svg>
+  );
+}
+
+export type AuthorTableVariant = "web" | "addin";
+
 type AuthorTableProps = {
+  variant?: AuthorTableVariant;
   scan: ScanResult;
   selected: Set<string>;
   allAuthorsSelected: boolean;
@@ -10,6 +52,7 @@ type AuthorTableProps = {
 };
 
 export function AuthorTable({
+  variant = "web",
   scan,
   selected,
   allAuthorsSelected,
@@ -21,9 +64,14 @@ export function AuthorTable({
     return <p className="field-hint">No classified authors found.</p>;
   }
 
+  const isAddin = variant === "addin";
+  const tableClassName = isAddin
+    ? "data-table data-table--authors data-table--authors-addin"
+    : "data-table data-table--authors";
+
   return (
     <>
-      <table className="data-table data-table--authors">
+      <table className={tableClassName}>
         <thead>
           <tr>
             <th scope="col" className="data-table__col-check">
@@ -41,13 +89,21 @@ export function AuthorTable({
               Author
             </th>
             <th scope="col" className="data-table__col-initials">
-              Initials
+              {isAddin ? (
+                <span className="visually-hidden">Initials</span>
+              ) : (
+                "Initials"
+              )}
             </th>
-            <th scope="col" className="data-table__col-count">
-              Track
+            <th
+              scope="col"
+              className="data-table__col-count"
+              aria-label="Tracked changes"
+            >
+              {isAddin ? <TrackIcon /> : "Track"}
             </th>
-            <th scope="col" className="data-table__col-count">
-              Comments
+            <th scope="col" className="data-table__col-count" aria-label="Comments">
+              {isAddin ? <CommentIcon /> : "Comments"}
             </th>
           </tr>
         </thead>
