@@ -293,8 +293,8 @@ export default function App() {
             Anonymise document authors before sharing externally.
           </h2>
           <p className="hero__lead">
-            Replace internal tracked-change and comment authors with your firm
-            identity. Tracked changes and comments stay intact.
+            Replace internal tracked-change and comment authors with your firm identity. 
+            Tracked changes and comments stay intact.
           </p>
         </div>
 
