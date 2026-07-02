@@ -74,28 +74,16 @@ export function canOpenDocumentInWord(): boolean {
   return Office.context.requirements.isSetSupported("WordApi", "1.3");
 }
 
-function sanitiseFileName(name: string): string {
-  return name.replace(/\.docx$/i, "").replace(/[<>:"/\\|?*]/g, "_").trim();
-}
-
 /** Opens anonymised bytes in a new Word window (desktop only). */
-export async function openDocumentInWord(
-  bytes: Uint8Array,
-  fileName: string,
-): Promise<void> {
+export async function openDocumentInWord(bytes: Uint8Array): Promise<void> {
   if (!canOpenDocumentInWord()) {
     throw new Error("Open in Word is only available in Word desktop.");
   }
 
   const base64 = bytesToBase64(bytes);
-  const saveName = sanitiseFileName(fileName);
   await Word.run(async (context) => {
     const doc = context.application.createDocument(base64);
     doc.open();
     await context.sync();
-    if (saveName) {
-      doc.save(Word.SaveBehavior.save, saveName);
-      await context.sync();
-    }
   });
 }

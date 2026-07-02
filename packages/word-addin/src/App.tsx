@@ -179,7 +179,7 @@ export default function App() {
     setError(null);
     setOpening(true);
     try {
-      await openDocumentInWord(result.docxBytes, anonymisedFileName);
+      await openDocumentInWord(result.docxBytes);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to open document.");
     } finally {
