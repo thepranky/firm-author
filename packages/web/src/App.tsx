@@ -249,7 +249,16 @@ export default function App() {
     <div className="shell">
       <header className="site-header">
         <div className="site-header__inner">
-          <h1 className="site-header__brand">Firm Author</h1>
+          <div className="site-header__brand">
+            <img
+              className="site-header__logo"
+              src="/logo.png"
+              alt=""
+              width={28}
+              height={28}
+            />
+            <h1 className="site-header__title">Firm Author</h1>
+          </div>
         </div>
       </header>
 

@@ -77,13 +77,27 @@ body {
 }
 
 .site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.site-header__logo {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.site-header__title {
   font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 400;
   letter-spacing: -0.01em;
   margin: 0;
   color: var(--text);
-  flex-shrink: 0;
 }
 
 .privacy-strip {

@@ -17,6 +17,21 @@
   gap: 0.5rem;
 }
 
+.addin-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.addin-header__logo {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
 .addin-header h1 {
   margin: 0;
   font-size: 1.1rem;

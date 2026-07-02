@@ -9,7 +9,7 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 function copyAddinPublicAssets(destRoot: string) {
   const src = path.join(dir, "public");
   if (!existsSync(src)) return;
-  for (const name of ["manifest.xml", "icon-16.png", "icon-32.png", "icon-64.png"]) {
+  for (const name of ["manifest.xml", "logo.png", "icon-16.png", "icon-32.png", "icon-64.png"]) {
     const from = path.join(src, name);
     if (existsSync(from)) {
       cpSync(from, path.join(destRoot, name));

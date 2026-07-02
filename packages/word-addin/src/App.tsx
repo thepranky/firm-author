@@ -199,7 +199,16 @@ export default function App() {
     <div className="addin-shell">
       <header className="addin-header">
         <div className="addin-header__row">
-          <h1>Firm Author</h1>
+          <div className="addin-header__brand">
+            <img
+              className="addin-header__logo"
+              src={`${import.meta.env.BASE_URL}logo.png`}
+              alt=""
+              width={24}
+              height={24}
+            />
+            <h1>Firm Author</h1>
+          </div>
           <button
             type="button"
             className="btn btn--ghost btn--rescan"
