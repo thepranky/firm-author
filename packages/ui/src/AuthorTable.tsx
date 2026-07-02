@@ -1,5 +1,46 @@
 import type { ScanResult } from "@firm-author/core";
 
+function CommentIcon() {
+  return (
+    <svg
+      className="data-table__hdr-icon"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
+function TrackIcon() {
+  return (
+    <svg
+      className="data-table__hdr-icon"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M4 6h9" />
+      <path d="M4 10h13" />
+      <path d="M4 14h7" />
+      <path d="M15 6l3 3-6 6H9v-3l6-6z" />
+    </svg>
+  );
+}
+
 type AuthorTableProps = {
   scan: ScanResult;
   selected: Set<string>;
@@ -41,19 +82,17 @@ export function AuthorTable({
               Author
             </th>
             <th scope="col" className="data-table__col-initials">
-              Initials
+              <span className="visually-hidden">Initials</span>
             </th>
-            <th scope="col" className="data-table__col-count" title="Tracked changes">
-              <span className="data-table__hdr-full">Tracked</span>
-              <span className="data-table__hdr-short" aria-hidden>
-                Trk
-              </span>
+            <th
+              scope="col"
+              className="data-table__col-count"
+              aria-label="Tracked changes"
+            >
+              <TrackIcon />
             </th>
-            <th scope="col" className="data-table__col-count" title="Comments">
-              <span className="data-table__hdr-full">Comments</span>
-              <span className="data-table__hdr-short" aria-hidden>
-                Cmt
-              </span>
+            <th scope="col" className="data-table__col-count" aria-label="Comments">
+              <CommentIcon />
             </th>
           </tr>
         </thead>

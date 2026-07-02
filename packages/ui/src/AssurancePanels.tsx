@@ -2,6 +2,7 @@ import type { IntegrityCheck } from "@firm-author/core";
 
 type IntegrityChecksProps = {
   integrity: IntegrityCheck;
+  footerNote?: string;
 };
 
 function integrityDetail(
@@ -15,7 +16,7 @@ function integrityDetail(
   return { before: row.before, after: row.after };
 }
 
-export function IntegrityChecks({ integrity }: IntegrityChecksProps) {
+export function IntegrityChecks({ integrity, footerNote }: IntegrityChecksProps) {
   const comments = integrityDetail(integrity, "comment");
   const tracked = integrityDetail(integrity, "tracked");
 
@@ -70,6 +71,9 @@ export function IntegrityChecks({ integrity }: IntegrityChecksProps) {
           </li>
         ))}
       </ul>
+      {footerNote && (
+        <p className="integrity-checks__footer">{footerNote}</p>
+      )}
     </div>
   );
 }

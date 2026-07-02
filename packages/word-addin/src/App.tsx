@@ -3,8 +3,6 @@ import {
   scanAuthors,
   anonymiseAuthors,
   generateAuditReport,
-  auditReportToJson,
-  auditReportToHtml,
   DEFAULT_REPLACEMENT_AUTHOR,
   DEFAULT_REPLACEMENT_INITIALS,
   type ScanResult,
@@ -17,9 +15,13 @@ import {
   ReplacementSettings,
   TimestampPolicyOptions,
   IntegrityChecks,
-  DownloadActionBar,
 } from "@firm-author/ui";
-import { getDocumentBytes, downloadBytes } from "./office/document";
+import {
+  getDocumentBytes,
+  downloadBytes,
+  openDocumentInWord,
+  canOpenDocumentInWord,
+} from "./office/document";
 
 const PRESET_KEY = "firm-author-addin-preset";
 
@@ -61,6 +63,7 @@ export default function App() {
   const [result, setResult] = useState<AnonymiseResult | null>(null);
   const [audit, setAudit] = useState<AuditReport | null>(null);
   const [docName, setDocName] = useState("document");
+  const [opening, setOpening] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(PRESET_KEY, JSON.stringify(preset));
@@ -168,6 +171,21 @@ export default function App() {
     );
   };
 
+  const openDocx = async () => {
+    if (!result) return;
+    setError(null);
+    setOpening(true);
+    try {
+      await openDocumentInWord(result.docxBytes);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to open document.");
+    } finally {
+      setOpening(false);
+    }
+  };
+
+  const showOpenInWord = canOpenDocumentInWord();
+
   const integrityFailed =
     result &&
     (!result.integrity.bodyTextUnchanged ||
@@ -204,7 +222,6 @@ export default function App() {
             Rescan
           </button>
         </div>
-        <p className="privacy-strip">Processed locally · Word Desktop</p>
       </header>
 
       <main className="addin-main">
@@ -253,51 +270,35 @@ export default function App() {
 
         {result && audit && (
           <section className="panel">
-            <h2>Download</h2>
-            <IntegrityChecks integrity={result.integrity} />
+            <h2 className="addin-section-heading">Download</h2>
+            <IntegrityChecks
+              integrity={result.integrity}
+              footerNote="The original document has not been modified. Click below to download and open the anonymised file."
+            />
             {integrityFailed && (
               <div className="alert alert--error" role="alert">
                 Integrity checks failed — review in Word before sharing.
               </div>
             )}
-            <DownloadActionBar
-              rows={[
-                [
-                  {
-                    id: "docx",
-                    label: "Download .docx",
-                    variant: "primary",
-                    onClick: downloadDocx,
-                  },
-                ],
-                [
-                  {
-                    id: "audit-json",
-                    label: "Audit JSON",
-                    onClick: () =>
-                      downloadBytes(
-                        new TextEncoder().encode(auditReportToJson(audit)),
-                        `${base}-audit.json`,
-                        "application/json",
-                      ),
-                  },
-                  {
-                    id: "audit-html",
-                    label: "Audit HTML",
-                    onClick: () =>
-                      downloadBytes(
-                        new TextEncoder().encode(auditReportToHtml(audit)),
-                        `${base}-audit.html`,
-                        "text/html",
-                      ),
-                  },
-                ],
-              ]}
-            />
-            <p className="field-hint">
-              The open document is not modified. Download the anonymised file
-              and open it separately to verify the Review pane.
-            </p>
+            <div className="btn-row btn-row--stacked">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={downloadDocx}
+              >
+                Download .docx
+              </button>
+              {showOpenInWord && (
+                <button
+                  type="button"
+                  className="btn btn--ghost"
+                  onClick={() => void openDocx()}
+                  disabled={opening}
+                >
+                  {opening ? "Opening…" : "Open .docx"}
+                </button>
+              )}
+            </div>
           </section>
         )}
       </main>

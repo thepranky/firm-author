@@ -60,3 +60,30 @@ export function downloadBytes(
   a.click();
   URL.revokeObjectURL(url);
 }
+
+function bytesToBase64(bytes: Uint8Array): string {
+  const chunkSize = 0x8000;
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+
+export function canOpenDocumentInWord(): boolean {
+  return Office.context.requirements.isSetSupported("WordApi", "1.3");
+}
+
+/** Opens anonymised bytes in a new Word window (desktop only). */
+export async function openDocumentInWord(bytes: Uint8Array): Promise<void> {
+  if (!canOpenDocumentInWord()) {
+    throw new Error("Open in Word is only available in Word desktop.");
+  }
+
+  const base64 = bytesToBase64(bytes);
+  await Word.run(async (context) => {
+    const doc = context.application.createDocument(base64);
+    doc.open();
+    await context.sync();
+  });
+}
