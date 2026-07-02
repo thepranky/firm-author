@@ -14,7 +14,7 @@ export function ReplacementSettings({
 }: ReplacementSettingsProps) {
   return (
     <>
-      <h4 className="panel__subheading">Replacement settings</h4>
+      <h2 className="addin-section-heading">Replacement settings</h2>
       <div className="field-grid">
         <div className="field">
           <label htmlFor="replacement-author">Replacement author</label>
@@ -45,7 +45,6 @@ export function ReplacementSettings({
           />
         </div>
       </div>
-      <p className="field-hint">Saved locally as your firm preset.</p>
     </>
   );
 }

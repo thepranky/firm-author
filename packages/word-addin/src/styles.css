@@ -10,17 +10,127 @@
   border-bottom: 1px solid var(--border);
 }
 
+.addin-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .addin-header h1 {
   margin: 0;
   font-size: 1.1rem;
   font-family: var(--font-serif);
+  min-width: 0;
+}
+
+.addin-header .privacy-strip {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  text-align: left;
 }
 
 .addin-main {
   padding: 1rem;
 }
 
-.addin-main .panel h2 {
+.addin-main .panel {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.addin-section-heading {
   margin: 0 0 0.75rem;
   font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  color: var(--text);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.addin-main .addin-section-heading + .addin-section-heading,
+.addin-main .data-table--authors + .addin-section-heading {
+  margin-top: 1.25rem;
+}
+
+.btn--rescan {
+  flex-shrink: 0;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.78rem;
+}
+
+.btn__icon {
+  flex-shrink: 0;
+}
+
+/* ——— Compact author table for narrow task panes ——— */
+
+.addin-main .data-table--authors {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.addin-main .data-table--authors th,
+.addin-main .data-table--authors td {
+  padding: 0.5rem 0.35rem;
+}
+
+.addin-main .data-table__col-check {
+  width: 1.75rem;
+  padding-left: 0.15rem !important;
+  padding-right: 0.15rem !important;
+}
+
+.addin-main .data-table__col-author {
+  width: auto;
+  min-width: 0;
+}
+
+.addin-main .data-table__author-name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.addin-main .data-table__col-initials {
+  width: 2.35rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.addin-main .data-table__col-count {
+  width: 2.1rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.addin-main .data-table__hdr-short {
+  display: none;
+}
+
+@media (max-width: 300px) {
+  .addin-main .data-table__hdr-full {
+    display: none;
+  }
+
+  .addin-main .data-table__hdr-short {
+    display: inline;
+  }
+
+  .addin-main .data-table__col-count {
+    width: 1.85rem;
+    font-size: 0.82rem;
+  }
+
+  .addin-main .data-table__col-initials {
+    width: 2rem;
+    font-size: 0.75rem;
+  }
 }

@@ -23,10 +23,10 @@ export function AuthorTable({
 
   return (
     <>
-      <table className="data-table">
+      <table className="data-table data-table--authors">
         <thead>
           <tr>
-            <th scope="col">
+            <th scope="col" className="data-table__col-check">
               <input
                 type="checkbox"
                 checked={allAuthorsSelected}
@@ -37,16 +37,30 @@ export function AuthorTable({
                 aria-label="Select all authors"
               />
             </th>
-            <th scope="col">Author</th>
-            <th scope="col">Tracked</th>
-            <th scope="col">Comments</th>
-            <th scope="col">Initials</th>
+            <th scope="col" className="data-table__col-author">
+              Author
+            </th>
+            <th scope="col" className="data-table__col-initials">
+              Initials
+            </th>
+            <th scope="col" className="data-table__col-count" title="Tracked changes">
+              <span className="data-table__hdr-full">Tracked</span>
+              <span className="data-table__hdr-short" aria-hidden>
+                Trk
+              </span>
+            </th>
+            <th scope="col" className="data-table__col-count" title="Comments">
+              <span className="data-table__hdr-full">Comments</span>
+              <span className="data-table__hdr-short" aria-hidden>
+                Cmt
+              </span>
+            </th>
           </tr>
         </thead>
         <tbody>
           {scan.authors.map((a) => (
             <tr key={a.author}>
-              <td>
+              <td className="data-table__col-check">
                 <input
                   type="checkbox"
                   checked={selected.has(a.author)}
@@ -54,10 +68,16 @@ export function AuthorTable({
                   aria-label={`Select ${a.author}`}
                 />
               </td>
-              <td>{a.author}</td>
-              <td>{a.trackedChangeCount}</td>
-              <td>{a.commentCount}</td>
-              <td>{a.initials.join(", ") || "—"}</td>
+              <td className="data-table__col-author">
+                <span className="data-table__author-name" title={a.author}>
+                  {a.author}
+                </span>
+              </td>
+              <td className="data-table__col-initials">
+                {a.initials.join(", ") || "—"}
+              </td>
+              <td className="data-table__col-count">{a.trackedChangeCount}</td>
+              <td className="data-table__col-count">{a.commentCount}</td>
             </tr>
           ))}
         </tbody>

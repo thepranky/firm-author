@@ -177,22 +177,37 @@ export default function App() {
   return (
     <div className="addin-shell">
       <header className="addin-header">
-        <h1>Firm Author</h1>
+        <div className="addin-header__row">
+          <h1>Firm Author</h1>
+          <button
+            type="button"
+            className="btn btn--ghost btn--rescan"
+            onClick={() => void loadDocument()}
+            disabled={loading}
+            aria-label="Rescan document"
+          >
+            <svg
+              className="btn__icon"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+              <path d="M21 3v6h-6" />
+            </svg>
+            Rescan
+          </button>
+        </div>
         <p className="privacy-strip">Processed locally · Word Desktop</p>
       </header>
 
       <main className="addin-main">
-        <div className="btn-row">
-          <button
-            type="button"
-            className="btn btn--ghost"
-            onClick={() => void loadDocument()}
-            disabled={loading}
-          >
-            Rescan document
-          </button>
-        </div>
-
         {loading && !result && <p className="loading-text">Loading…</p>}
         {error && (
           <div className="alert alert--error" role="alert">
@@ -202,7 +217,7 @@ export default function App() {
 
         {scan && !result && (
           <section className="panel">
-            <h2>Authors to replace</h2>
+            <h2 className="addin-section-heading">Authors to replace</h2>
             <AuthorTable
               scan={scan}
               selected={selected}
