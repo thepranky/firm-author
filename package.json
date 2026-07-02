@@ -4,7 +4,11 @@
   "scripts": {
     "dev": "pnpm --filter @firm-author/web dev",
     "build": "pnpm --filter @firm-author/core build && pnpm --filter @firm-author/word-addin build && pnpm --filter @firm-author/web build",
+    "generate:icons": "node scripts/generate-addin-icons.mjs",
     "test": "pnpm --filter @firm-author/core exec vitest run",
     "test:watch": "pnpm --filter @firm-author/core exec vitest"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.2"
   }
 }

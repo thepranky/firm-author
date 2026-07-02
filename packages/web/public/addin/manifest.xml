@@ -6,7 +6,7 @@
   xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
   xsi:type="TaskPaneApp">
   <Id>f3a2c8e1-9b4d-4a6f-8c2e-1d5f7a9b3c4e</Id>
-  <Version>1.0.0.1</Version>
+  <Version>1.0.0.2</Version>
   <ProviderName>Firm Author</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Firm Author" />
@@ -69,7 +69,7 @@
       <bt:Images>
         <bt:Image id="Icon.16" DefaultValue="https://firm-author.vercel.app/addin/icon-16.png" />
         <bt:Image id="Icon.32" DefaultValue="https://firm-author.vercel.app/addin/icon-32.png" />
-        <bt:Image id="Icon.80" DefaultValue="https://firm-author.vercel.app/addin/icon-64.png" />
+        <bt:Image id="Icon.80" DefaultValue="https://firm-author.vercel.app/addin/icon-80.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://firm-author.vercel.app/addin/index.html" />
