@@ -74,7 +74,7 @@ export function scanCoreXml(
       part: "docProps/core.xml",
       kind: "coreProps",
       description:
-        "Document creator / last modified by matches visible author (not rewritten in MVP)",
+        "Document creator / last modified by matches visible author (reported only)",
       matchingAuthors: [...new Set(matching)],
       attributeOrElement: "dc:creator / cp:lastModifiedBy",
     });
@@ -113,7 +113,7 @@ export function scanCommentExtensionPart(
       part,
       kind: "commentExtension",
       description:
-        "Modern comment extension metadata detected (inspect-only in MVP)",
+        "Modern comment extension metadata detected (reported only)",
       matchingAuthors: [...new Set(matchingAuthors)],
       attributeOrElement: dates.length
         ? dates.join(", ")
