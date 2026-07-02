@@ -403,15 +403,11 @@ body {
 
 /* ——— Author table (web + add-in) ——— */
 
-.data-table--authors th:first-child,
-.data-table--authors td:first-child {
-  width: auto;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.data-table--authors .data-table__col-check {
-  width: 2.75rem;
+.data-table--authors th.data-table__col-check,
+.data-table--authors td.data-table__col-check {
+  width: 2rem;
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
   text-align: center;
 }
 
