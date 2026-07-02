@@ -10,7 +10,13 @@ import {
   type AnonymiseResult,
   type AuditReport,
 } from "@firm-author/core";
-import { StepNav, IntegrityChecks } from "./components/StepNav";
+import { StepNav } from "./components/StepNav";
+import {
+  AuthorTable,
+  ReplacementSettings,
+  IntegrityChecks,
+  AnonymisedDocActions,
+} from "@firm-author/ui";
 import { type StepId } from "./steps";
 
 const PRESET_KEY = "firm-author-preset";
@@ -336,109 +342,20 @@ export default function App() {
                 <h3 className="panel__title">Configure anonymisation</h3>
               </div>
 
-              <h4 className="panel__subheading">Authors to replace</h4>
+              <h4 className="section-heading">Authors to replace</h4>
 
-              {scan.authors.length === 0 ? (
-                <p className="field-hint">No classified authors found.</p>
-              ) : (
-                <>
-                  <table className="data-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">
-                          <input
-                            type="checkbox"
-                            checked={allAuthorsSelected}
-                            ref={(el) => {
-                              if (el) el.indeterminate = someAuthorsSelected;
-                            }}
-                            onChange={toggleSelectAll}
-                            aria-label="Select all authors"
-                          />
-                        </th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Tracked</th>
-                        <th scope="col">Comments</th>
-                        <th scope="col">Initials</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {scan.authors.map((a) => (
-                        <tr key={a.author}>
-                          <td>
-                            <input
-                              type="checkbox"
-                              checked={selected.has(a.author)}
-                              onChange={() => toggleAuthor(a.author)}
-                              aria-label={`Select ${a.author}`}
-                            />
-                          </td>
-                          <td>{a.author}</td>
-                          <td>{a.trackedChangeCount}</td>
-                          <td>{a.commentCount}</td>
-                          <td>{a.initials.join(", ") || "—"}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </>
-              )}
-
-              {scan.unclassified.length > 0 && (
-                <div className="alert alert--warn">
-                  <strong>Unclassified metadata</strong> —{" "}
-                  {scan.unclassified.length} element
-                  {scan.unclassified.length !== 1 ? "s" : ""} with{" "}
-                  <code>w:author</code> not counted as tracked changes:
-                  <ul>
-                    {scan.unclassified.map((u, i) => (
-                      <li key={i}>
-                        {u.part} · {u.authorValue}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <AuthorTable
+                scan={scan}
+                selected={selected}
+                allAuthorsSelected={allAuthorsSelected}
+                someAuthorsSelected={someAuthorsSelected}
+                onToggleAuthor={toggleAuthor}
+                onToggleSelectAll={toggleSelectAll}
+              />
 
               <hr className="panel__divider" />
 
-              <h4 className="panel__subheading">Replacement settings</h4>
-
-              <div className="field-grid">
-                <div className="field">
-                  <label htmlFor="replacement-author">Replacement author</label>
-                  <input
-                    id="replacement-author"
-                    type="text"
-                    value={preset.replacementAuthor}
-                    onChange={(e) =>
-                      setPreset((p) => ({
-                        ...p,
-                        replacementAuthor: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
-                <div className="field">
-                  <label htmlFor="replacement-initials">
-                    Replacement initials
-                  </label>
-                  <input
-                    id="replacement-initials"
-                    type="text"
-                    value={preset.replacementInitials}
-                    onChange={(e) =>
-                      setPreset((p) => ({
-                        ...p,
-                        replacementInitials: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
-              </div>
-              <p className="field-hint">
-                Saved locally as your firm preset.
-              </p>
+              <ReplacementSettings preset={preset} onPresetChange={setPreset} />
 
               <div className="option-group">
                 <span className="option-group__label">Timestamp policy</span>
@@ -516,15 +433,10 @@ export default function App() {
                 <h3 className="panel__title">Download</h3>
               </div>
 
-              <p className="results-summary">
-                Replaced <strong>{audit.summary.authorsReplaced}</strong>{" "}
-                author{audit.summary.authorsReplaced !== 1 ? "s" : ""} ·{" "}
-                <strong>{audit.summary.totalTrackedChangesAffected}</strong>{" "}
-                tracked changes ·{" "}
-                <strong>{audit.summary.totalCommentsAffected}</strong> comments
-              </p>
-
-              <IntegrityChecks integrity={result.integrity} />
+              <IntegrityChecks
+                integrity={result.integrity}
+                footerNote="The original document has not been modified. Download the anonymised file and open it in Word to verify the Review pane."
+              />
 
               {integrityFailed && (
                 <div className="alert alert--error" role="alert">
@@ -533,11 +445,7 @@ export default function App() {
                 </div>
               )}
 
-              <div className="btn-row btn-row--center">
-                <button type="button" className="btn btn--primary" onClick={downloadDocx}>
-                  Download .docx
-                </button>
-              </div>
+              <AnonymisedDocActions onDownload={downloadDocx} />
             </div>
           </section>
         )}

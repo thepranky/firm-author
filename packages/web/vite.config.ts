@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@firm-author/core": path.resolve(dir, "../core/src/index.ts"),
+      "@firm-author/ui": path.resolve(dir, "../ui/src/index.ts"),
     },
   },
   server: {

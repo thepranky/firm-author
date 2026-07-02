@@ -14,7 +14,7 @@ export function ReplacementSettings({
 }: ReplacementSettingsProps) {
   return (
     <>
-      <h2 className="addin-section-heading">Replacement settings</h2>
+      <h4 className="section-heading">Replacement settings</h4>
       <div className="field-grid">
         <div className="field">
           <label htmlFor="replacement-author">Replacement author</label>

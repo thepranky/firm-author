@@ -15,6 +15,7 @@ import {
   ReplacementSettings,
   TimestampPolicyOptions,
   IntegrityChecks,
+  AnonymisedDocActions,
 } from "@firm-author/ui";
 import {
   getDocumentBytes,
@@ -162,11 +163,13 @@ export default function App() {
 
   const base = docName.replace(/\.docx$/i, "");
 
+  const anonymisedFileName = `${base}-anonymised.docx`;
+
   const downloadDocx = () => {
     if (!result) return;
     downloadBytes(
       result.docxBytes,
-      `${base}-anonymised.docx`,
+      anonymisedFileName,
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     );
   };
@@ -176,7 +179,7 @@ export default function App() {
     setError(null);
     setOpening(true);
     try {
-      await openDocumentInWord(result.docxBytes);
+      await openDocumentInWord(result.docxBytes, anonymisedFileName);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to open document.");
     } finally {
@@ -234,7 +237,7 @@ export default function App() {
 
         {scan && !result && (
           <section className="panel">
-            <h2 className="addin-section-heading">Authors to replace</h2>
+            <h4 className="section-heading">Authors to replace</h4>
             <AuthorTable
               scan={scan}
               selected={selected}
@@ -270,7 +273,7 @@ export default function App() {
 
         {result && audit && (
           <section className="panel">
-            <h2 className="addin-section-heading">Download</h2>
+            <h4 className="section-heading">Download</h4>
             <IntegrityChecks
               integrity={result.integrity}
               footerNote="The original document has not been modified. Click below to download and open the anonymised file."
@@ -280,25 +283,12 @@ export default function App() {
                 Integrity checks failed — review in Word before sharing.
               </div>
             )}
-            <div className="btn-row btn-row--stacked">
-              <button
-                type="button"
-                className="btn btn--primary"
-                onClick={downloadDocx}
-              >
-                Download .docx
-              </button>
-              {showOpenInWord && (
-                <button
-                  type="button"
-                  className="btn btn--ghost"
-                  onClick={() => void openDocx()}
-                  disabled={opening}
-                >
-                  {opening ? "Opening…" : "Open .docx"}
-                </button>
-              )}
-            </div>
+            <AnonymisedDocActions
+              onDownload={downloadDocx}
+              onOpen={() => void openDocx()}
+              opening={opening}
+              showOpen={showOpenInWord}
+            />
           </section>
         )}
       </main>
