@@ -250,10 +250,6 @@ export default function App() {
       <header className="site-header">
         <div className="site-header__inner">
           <h1 className="site-header__brand">Firm Author</h1>
-          <p className="privacy-strip">
-            <span className="privacy-strip__icon" aria-hidden />
-            Processed locally in your browser. Never uploaded.
-          </p>
         </div>
       </header>
 
@@ -450,12 +446,15 @@ export default function App() {
           </section>
         )}
           </main>
-
-          <footer className="site-footer">
-            Firm Author · Local-first · No document data leaves your browser
-          </footer>
         </div>
       </div>
+
+      <footer className="site-footer">
+        <p className="privacy-strip">
+          <span className="privacy-strip__icon" aria-hidden />
+          Processed locally in your browser. Never uploaded.
+        </p>
+      </footer>
     </div>
   );
 }

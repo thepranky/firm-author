@@ -48,16 +48,19 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* ——— Shell ——— */
 
 .shell {
-  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 .site-header {
+  flex-shrink: 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -67,13 +70,10 @@ body {
 }
 
 .site-header__inner {
-  max-width: var(--layout-max);
-  margin: 0 auto;
   padding: 0.85rem 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
 }
 
 .site-header__brand {
@@ -92,8 +92,8 @@ body {
   color: var(--text-muted);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  text-align: right;
 }
 
 .privacy-strip__icon {
@@ -107,9 +107,13 @@ body {
 /* ——— Content layout ——— */
 
 .content-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
   max-width: var(--layout-max);
   margin: 0 auto;
   padding: 0 1.25rem;
+  width: 100%;
 }
 
 .content-body {
@@ -399,25 +403,20 @@ body {
 
 /* ——— Author table (web + add-in) ——— */
 
-.data-table--authors {
-  table-layout: fixed;
-  width: 100%;
-}
-
-.data-table--authors th,
-.data-table--authors td {
-  padding: 0.5rem 0.35rem;
-}
-
-.data-table__col-check {
-  width: 1.75rem;
-  padding-left: 0.15rem !important;
-  padding-right: 0.15rem !important;
-}
-
-.data-table__col-author {
+.data-table--authors th:first-child,
+.data-table--authors td:first-child {
   width: auto;
-  min-width: 0;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.data-table--authors .data-table__col-check {
+  width: 2.75rem;
+  text-align: center;
+}
+
+.data-table--authors input[type="checkbox"] {
+  margin-inline: auto;
 }
 
 .data-table__author-name {
@@ -427,38 +426,30 @@ body {
   white-space: nowrap;
 }
 
-.data-table__col-initials {
-  width: 2.35rem;
+.data-table__col-initials,
+.data-table__col-count {
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.data-table__col-initials {
+  width: 1%;
 }
 
 .data-table__col-count {
-  display: none;
-  width: 1.75rem;
+  width: 1%;
   text-align: center;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  padding-left: 0.2rem !important;
-  padding-right: 0.2rem !important;
 }
 
-.data-table__hdr-icon {
-  display: block;
-  margin: 0 auto;
-  color: var(--text-subtle);
+.data-table--authors tbody tr:last-child td {
+  border-bottom: none;
 }
 
-.data-table--authors th.data-table__col-count {
-  padding-top: 0.55rem;
-  padding-bottom: 0.55rem;
-}
-
-@media (min-width: 340px) {
-  .data-table__col-count {
-    display: table-cell;
-  }
+.data-table--authors + .panel__divider,
+.data-table--authors + .alert + .panel__divider {
+  margin-top: 0;
 }
 
 .visually-hidden {
@@ -796,11 +787,10 @@ body {
 /* ——— Footer ——— */
 
 .site-footer {
-  padding: 1.5rem 0 2rem;
+  flex-shrink: 0;
+  padding: 0.85rem 1.25rem;
   border-top: 1px solid var(--border);
-  font-size: 0.78rem;
-  color: var(--text-subtle);
-  text-align: center;
+  background: var(--bg);
 }
 
 .loading-text {
@@ -818,21 +808,21 @@ body {
     display: grid;
     grid-template-columns: var(--rail-w) minmax(0, 1fr);
     gap: 2.5rem;
-    align-items: start;
-    min-height: calc(100dvh - var(--header-h));
+    align-content: center;
+    min-height: 100%;
   }
 
   .content-body {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - var(--header-h));
+    min-height: 0;
   }
 
   .main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 0 2rem;
+    padding: 1.5rem 0 1rem;
   }
 
   .main--upload {
@@ -869,24 +859,14 @@ body {
 
   .step-rail {
     display: block;
+    align-self: center;
     position: sticky;
     top: 50%;
     transform: translateY(-50%);
-    align-self: start;
   }
 }
 
 @media (max-width: 540px) {
-  .site-header__inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-  }
-
-  .privacy-strip {
-    text-align: left;
-  }
-
   .hero__title {
     font-size: 1.85rem;
   }
