@@ -43,18 +43,26 @@ function OpenIcon() {
 type AnonymisedDocActionsProps = {
   onDownload: () => void;
   onOpen?: () => void;
+  onNewDocument?: () => void;
   opening?: boolean;
   showOpen?: boolean;
+  newDocumentLabel?: string;
 };
 
 export function AnonymisedDocActions({
   onDownload,
   onOpen,
+  onNewDocument,
   opening = false,
   showOpen = false,
+  newDocumentLabel = "Anonymize new document",
 }: AnonymisedDocActionsProps) {
+  const hasSecondary = showOpen || onNewDocument;
+
   return (
-    <div className={`btn-row${showOpen ? " btn-row--pair" : " btn-row--center"}`}>
+    <div
+      className={`btn-row${hasSecondary ? " btn-row--pair" : " btn-row--center"}`}
+    >
       <button type="button" className="btn btn--primary" onClick={onDownload}>
         <DownloadIcon />
         Download
@@ -68,6 +76,11 @@ export function AnonymisedDocActions({
         >
           <OpenIcon />
           {opening ? "Opening…" : "Open"}
+        </button>
+      )}
+      {onNewDocument && (
+        <button type="button" className="btn btn--ghost" onClick={onNewDocument}>
+          {newDocumentLabel}
         </button>
       )}
     </div>

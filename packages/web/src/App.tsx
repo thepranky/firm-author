@@ -20,6 +20,7 @@ import {
 import { type StepId } from "./steps";
 
 const PRESET_KEY = "firm-author-preset";
+const GITHUB_URL = "https://github.com/thepranky/firm-author";
 
 type Preset = {
   replacementAuthor: string;
@@ -239,6 +240,19 @@ export default function App() {
     downloadBlob(blob, `${baseName(file.name)}-anonymised.docx`);
   };
 
+  const startNewDocument = useCallback(() => {
+    setFile(null);
+    setFileBytes(null);
+    setScan(null);
+    setSelected(new Set());
+    setResult(null);
+    setAudit(null);
+    setError(null);
+    const input = document.getElementById("file-input") as HTMLInputElement | null;
+    if (input) input.value = "";
+    goToStep("upload");
+  }, [goToStep]);
+
   const integrityFailed =
     result &&
     (!result.integrity.bodyTextUnchanged ||
@@ -450,7 +464,10 @@ export default function App() {
                 </div>
               )}
 
-              <AnonymisedDocActions onDownload={downloadDocx} />
+              <AnonymisedDocActions
+                onDownload={downloadDocx}
+                onNewDocument={startNewDocument}
+              />
             </div>
           </section>
         )}
@@ -459,10 +476,20 @@ export default function App() {
       </div>
 
       <footer className="site-footer">
-        <p className="privacy-strip">
-          <span className="privacy-strip__icon" aria-hidden />
-          Processed locally in your browser. Never uploaded.
-        </p>
+        <div className="site-footer__inner">
+          <p className="privacy-strip">
+            <span className="privacy-strip__icon" aria-hidden />
+            Processed locally in your browser. Never uploaded.
+          </p>
+          <a
+            className="site-footer__link"
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
       </footer>
     </div>
   );
