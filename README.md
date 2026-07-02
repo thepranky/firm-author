@@ -5,7 +5,6 @@ Local-first DOCX author anonymisation for law firm Word documents. Use it in the
 **Live:** [firm-author.vercel.app](https://firm-author.vercel.app)
 
 
-
 ## Web app
 
 1. Open [firm-author.vercel.app](https://firm-author.vercel.app)
@@ -13,6 +12,7 @@ Local-first DOCX author anonymisation for law firm Word documents. Use it in the
 3. Select the internal authors to replace and set the replacement author
 4. Download the anonymised document
 
+<img width="1470" height="843" alt="image" src="https://github.com/user-attachments/assets/e6b3195b-f5fa-4c5d-abdc-0f0c20718d5d" />
 
 ## Word add-in
 
@@ -25,6 +25,9 @@ The add-in scans and anonymises the document you already have open in Word Deskt
 5. Select authors, run anonymisation, then download or open the cleaned document in Word
 
 Desktop Word only. Word Online is not supported yet.
+
+<img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/9674d0db-6282-47d8-828a-ff055be2239a" />
+
 
 ## What it does
 
