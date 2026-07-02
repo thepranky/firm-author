@@ -26,8 +26,6 @@
 
 .addin-main {
   padding: 1rem;
-  container-type: inline-size;
-  container-name: addin-main;
 }
 
 .addin-main .panel {
@@ -82,8 +80,8 @@
   color: var(--text-subtle);
 }
 
-@container addin-main (min-width: 360px) {
-  .data-table--authors-addin .data-table__col-count {
+@media (min-width: 340px) {
+  .addin-main .data-table--authors-addin .data-table__col-count {
     display: table-cell;
   }
 }
