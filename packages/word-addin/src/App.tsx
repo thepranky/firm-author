@@ -44,21 +44,14 @@ function loadPreset(): Preset {
   };
 }
 
-function todayDatetimeLocal(): string {
-  const now = new Date();
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-}
-
 export default function App() {
   const [scan, setScan] = useState<ScanResult | null>(null);
   const [originalBytes, setOriginalBytes] = useState<Uint8Array | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [preset, setPreset] = useState<Preset>(loadPreset);
-  const [timestampMode, setTimestampMode] = useState<
-    "preserve" | "remove" | "normalize"
-  >("preserve");
-  const [normalizeDatetime, setNormalizeDatetime] = useState(todayDatetimeLocal);
+  const [timestampMode, setTimestampMode] = useState<"preserve" | "remove">(
+    "preserve",
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnonymiseResult | null>(null);
@@ -122,13 +115,9 @@ export default function App() {
     else setSelected(new Set(scan.authors.map((a) => a.author)));
   };
 
-  const buildTimestampPolicy = (): TimestampPolicy | null => {
+  const buildTimestampPolicy = (): TimestampPolicy => {
     if (timestampMode === "preserve") return { mode: "preserve" };
-    if (timestampMode === "remove") return { mode: "remove" };
-    if (!normalizeDatetime) return null;
-    const iso = new Date(normalizeDatetime).toISOString();
-    if (Number.isNaN(Date.parse(iso))) return null;
-    return { mode: "normalize", isoDatetime: iso };
+    return { mode: "remove" };
   };
 
   const runAnonymise = async () => {
@@ -139,10 +128,6 @@ export default function App() {
       return;
     }
     const timestampPolicy = buildTimestampPolicy();
-    if (!timestampPolicy) {
-      setError("Choose a valid timestamp.");
-      return;
-    }
     setLoading(true);
     try {
       const anonResult = await anonymiseAuthors(originalBytes, {
@@ -259,14 +244,7 @@ export default function App() {
             <ReplacementSettings preset={preset} onPresetChange={setPreset} />
             <TimestampPolicyOptions
               timestampMode={timestampMode}
-              normalizeDatetime={normalizeDatetime}
-              onTimestampModeChange={(mode) => {
-                setTimestampMode(mode);
-                if (mode === "normalize") {
-                  setNormalizeDatetime((c) => c || todayDatetimeLocal());
-                }
-              }}
-              onNormalizeDatetimeChange={setNormalizeDatetime}
+              onTimestampModeChange={setTimestampMode}
             />
             <div className="btn-row">
               <button

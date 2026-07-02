@@ -81,6 +81,18 @@ export function peopleXml(): string {
 </w15:people>`;
 }
 
+export function multiAuthorPeopleXml(): string {
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w15:people xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml">
+  <w15:person w15:author="Jane Doe">
+    <w15:presenceInfo w15:providerId="AD" w15:userId="jane.doe@firm.com"/>
+  </w15:person>
+  <w15:person w15:author="John Smith">
+    <w15:presenceInfo w15:providerId="AD" w15:userId="john.smith@firm.com"/>
+  </w15:person>
+</w15:people>`;
+}
+
 export function coreXml(): string {
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/">

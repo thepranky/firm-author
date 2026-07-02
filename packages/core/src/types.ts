@@ -1,7 +1,6 @@
 export type TimestampPolicy =
   | { mode: "preserve" }
-  | { mode: "remove" }
-  | { mode: "normalize"; isoDatetime: string };
+  | { mode: "remove" };
 
 export type AnonymiseOptions = {
   authorsToReplace: string[];
@@ -60,6 +59,7 @@ export type AnonymiseResult = {
   integrity: IntegrityCheck;
   scanBefore: ScanResult;
   scanAfter: ScanResult;
+  modifiedParts: string[];
 };
 
 export type AuditReport = {

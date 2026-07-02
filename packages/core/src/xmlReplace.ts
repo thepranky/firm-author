@@ -152,14 +152,6 @@ export function replaceAuthorsInPart(
 
     if (options.timestampPolicy.mode === "remove") {
       newAttrs = removeAttribute(newAttrs, "date");
-    } else if (options.timestampPolicy.mode === "normalize") {
-      if (getAttributeValue(newAttrs, "date") !== undefined) {
-        newAttrs = replaceAttributeValue(
-          newAttrs,
-          "date",
-          options.timestampPolicy.isoDatetime,
-        );
-      }
     }
 
     const prefixMatch = tag.fullMatch.match(/^<([\w]+:)?/);

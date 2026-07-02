@@ -57,12 +57,6 @@ function baseName(filename: string): string {
   return filename.replace(/\.docx$/i, "");
 }
 
-function todayDatetimeLocal(): string {
-  const now = new Date();
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-}
-
 function activeStep(
   scan: ScanResult | null,
   result: AnonymiseResult | null,
@@ -78,10 +72,9 @@ export default function App() {
   const [scan, setScan] = useState<ScanResult | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [preset, setPreset] = useState<Preset>(loadPreset);
-  const [timestampMode, setTimestampMode] = useState<
-    "preserve" | "remove" | "normalize"
-  >("preserve");
-  const [normalizeDatetime, setNormalizeDatetime] = useState(todayDatetimeLocal);
+  const [timestampMode, setTimestampMode] = useState<"preserve" | "remove">(
+    "preserve",
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnonymiseResult | null>(null);
@@ -191,13 +184,9 @@ export default function App() {
     }
   };
 
-  const buildTimestampPolicy = (): TimestampPolicy | null => {
+  const buildTimestampPolicy = (): TimestampPolicy => {
     if (timestampMode === "preserve") return { mode: "preserve" };
-    if (timestampMode === "remove") return { mode: "remove" };
-    if (!normalizeDatetime) return null;
-    const iso = new Date(normalizeDatetime).toISOString();
-    if (Number.isNaN(Date.parse(iso))) return null;
-    return { mode: "normalize", isoDatetime: iso };
+    return { mode: "remove" };
   };
 
   const runAnonymise = async () => {
@@ -209,10 +198,6 @@ export default function App() {
       return;
     }
     const timestampPolicy = buildTimestampPolicy();
-    if (!timestampPolicy) {
-      setError("Choose a valid timestamp.");
-      return;
-    }
     setLoading(true);
     try {
       const anonResult = await anonymiseAuthors(fileBytes, {
@@ -396,33 +381,7 @@ export default function App() {
                   />
                   Remove timestamps
                 </label>
-                <label className="option-row">
-                  <input
-                    type="radio"
-                    name="ts"
-                    checked={timestampMode === "normalize"}
-                    onChange={() => {
-                      setTimestampMode("normalize");
-                      setNormalizeDatetime((current) =>
-                        current || todayDatetimeLocal(),
-                      );
-                    }}
-                  />
-                  Choose timestamp
-                </label>
               </div>
-
-              {timestampMode === "normalize" && (
-                <div className="field" style={{ maxWidth: "280px" }}>
-                  <input
-                    id="normalize-dt"
-                    type="datetime-local"
-                    value={normalizeDatetime}
-                    onChange={(e) => setNormalizeDatetime(e.target.value)}
-                    aria-label="Chosen timestamp"
-                  />
-                </div>
-              )}
 
               {error && scan && (
                 <div className="alert alert--error" role="alert">

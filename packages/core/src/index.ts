@@ -22,6 +22,7 @@ export {
 export { KNOWN_REVISION_ELEMENTS, classifyElement, isRewriteTarget } from "./revisionElements.js";
 export { scanAuthors } from "./scanAuthors.js";
 export { anonymiseAuthors } from "./anonymiseAuthors.js";
+export { scrubPeopleXml } from "./scrubPeople.js";
 export { verifyIntegrity } from "./verifyIntegrity.js";
 export {
   generateAuditReport,

@@ -37,8 +37,7 @@ export function scanPeopleXml(
     findings.push({
       part: "word/people.xml",
       kind: "people",
-      description:
-        "Author registry entries detected in people.xml (not rewritten in MVP)",
+      description: "Author registry entries detected in people.xml",
       matchingAuthors: matching,
       attributeOrElement: "w15:person/@w15:author",
     });
@@ -49,7 +48,7 @@ export function scanPeopleXml(
       part: "word/people.xml",
       kind: "people",
       description:
-        "Presence info (w15:userId / w15:providerId) detected — not rewritten in MVP",
+        "Presence info (w15:userId / w15:providerId) detected in people.xml",
       matchingAuthors: matching,
       attributeOrElement: "w15:presenceInfo",
     });

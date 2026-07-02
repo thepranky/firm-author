@@ -43,7 +43,7 @@ function groupLocations(
 }
 
 export function generateAuditReport(result: AnonymiseResult): AuditReport {
-  const { options, hits, integrity, scanBefore } = result;
+  const { options, hits, integrity, scanBefore, modifiedParts } = result;
   const authors: AuditAuthorEntry[] = [];
 
   for (const authorToReplace of options.authorsToReplace) {
@@ -62,9 +62,7 @@ export function generateAuditReport(result: AnonymiseResult): AuditReport {
     });
   }
 
-  const partsModified = [
-    ...new Set(hits.map((h) => h.part)),
-  ].sort();
+  const partsModified = [...new Set(modifiedParts)].sort();
 
   const totalTrackedChangesAffected = authors.reduce(
     (s, a) => s + a.trackedChangeCount,
@@ -92,7 +90,7 @@ export function generateAuditReport(result: AnonymiseResult): AuditReport {
       partsModified,
     },
     futureOptionsNote:
-      "Future option: also replace document creator / last modified by metadata in docProps/core.xml (not active in MVP).",
+      "Future option: also replace document creator / last modified by metadata in docProps/core.xml.",
   };
 }
 

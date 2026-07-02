@@ -6,6 +6,7 @@ import {
   repackDocx,
 } from "./parts.js";
 import { isRewriteTarget } from "./revisionElements.js";
+import { scrubPeopleXml } from "./scrubPeople.js";
 import { replaceAuthorsInPart } from "./xmlReplace.js";
 import { scanAuthors } from "./scanAuthors.js";
 import { verifyIntegrity } from "./verifyIntegrity.js";
@@ -42,6 +43,17 @@ export async function anonymiseAuthors(
     }
   }
 
+  const peopleXml = await readPartAsString(zip, "word/people.xml");
+  if (peopleXml) {
+    const { xml: newPeopleXml, modifiedCount } = scrubPeopleXml(peopleXml, {
+      authorsToReplace: options.authorsToReplace,
+      replacementAuthor: options.replacementAuthor,
+    });
+    if (modifiedCount > 0) {
+      modifiedParts.set("word/people.xml", newPeopleXml);
+    }
+  }
+
   const outputBytes = await repackDocx(docxBytes, modifiedParts);
   const scanAfter = await scanAuthors(outputBytes);
   const integrity = await verifyIntegrity(docxBytes, outputBytes);
@@ -63,5 +75,6 @@ export async function anonymiseAuthors(
     integrity,
     scanBefore,
     scanAfter,
+    modifiedParts: [...modifiedParts.keys()].sort(),
   };
 }

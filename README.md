@@ -22,19 +22,18 @@ pnpm build        # production build
 - Scans **visible** tracked-change authors (`w:author` on known revision elements) and comment authors across story parts
 - Lets you select authors and replace them with a firm author (default: **Law Firm LLP** / **LFL**)
 - Rewrites `w:initials` on comments where present
-- Timestamp policy on `w:date`: preserve (default), remove, or normalise
+- Timestamp policy on `w:date`: preserve (default) or remove
 - Exports cleaned `.docx` plus audit JSON/HTML
 - Verifies body text, comment count, and tracked-change element count are unchanged
 
 ## What it does not do (MVP)
 
 - Rewrite `docProps/core.xml` (creator / last modified by)
-- Rewrite or collapse `word/people.xml`
 - Rewrite modern comment extension parts (`commentsExtended.xml`, etc.)
 - Automatic internal/external author inference
 - Word Online add-in support
 
-Ancillary metadata is **detected and reported** in the audit but not modified.
+Ancillary metadata in `docProps/core.xml` and modern comment extension parts is **detected and reported** in the audit but not modified.
 
 ## Word add-in
 
@@ -83,6 +82,6 @@ See [DEPLOY.md](./DEPLOY.md) for Vercel setup and connecting GitHub for auto-dep
 
 ## Roadmap
 
-- Optional core.xml / people.xml scrub (checkbox)
+- Optional core.xml scrub
 - Modern comment extension metadata rewrite (after Word fixture validation)
 - AppSource listing for Word add-in
